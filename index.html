@@ -243,8 +243,12 @@
 
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 16px;
+        }
+
+        .metrics-grid-second {
+            margin-top: 16px;
         }
 
         .metric-card {
@@ -561,6 +565,10 @@
                 grid-template-columns: repeat(2, 1fr);
             }
 
+            .metrics-grid-second {
+                margin-top: 16px;
+            }
+
             .strategy-header {
                 flex-direction: column;
             }
@@ -646,24 +654,9 @@
                 <h3 class="section-title">Key Performance Metrics</h3>
                 <div class="metrics-grid">
                     <div class="metric-card">
-                        <div class="metric-label">Total ROI</div>
-                        <div class="metric-value positive">+7,481.00%</div>
-                        <div class="metric-subtext">Since strategy launch</div>
-                    </div>
-                    <div class="metric-card">
                         <div class="metric-label">Monthly Return (May)</div>
                         <div class="metric-value positive">+29.80%</div>
                         <div class="metric-subtext">Record monthly performance</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-label">Runtime</div>
-                        <div class="metric-value neutral">2y 4mo 28d</div>
-                        <div class="metric-subtext">Launched January 2024</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-label">Max Drawdown</div>
-                        <div class="metric-value negative">-42.73%</div>
-                        <div class="metric-subtext">Historical maximum loss</div>
                     </div>
                     <div class="metric-card">
                         <div class="metric-label">Win Rate</div>
@@ -675,15 +668,12 @@
                         <div class="metric-value neutral">2,210</div>
                         <div class="metric-subtext">Cumulative executed trades</div>
                     </div>
+                </div>
+                <div class="metrics-grid metrics-grid-second">
                     <div class="metric-card">
                         <div class="metric-label">Avg Winning Trade</div>
                         <div class="metric-value positive">+3.83%</div>
                         <div class="metric-subtext">Average profit per trade</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-label">Avg Losing Trade</div>
-                        <div class="metric-value negative">-2.21%</div>
-                        <div class="metric-subtext">Average loss per trade</div>
                     </div>
                     <div class="metric-card">
                         <div class="metric-label">Sharpe Ratio</div>

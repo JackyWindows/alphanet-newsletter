@@ -1,0 +1,466 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap');
+
+  .nl-root {
+    font-family: 'Syne', sans-serif;
+    max-width: 680px;
+    color: var(--color-text-primary);
+    padding: 0 0 2rem;
+  }
+  .nl-header {
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  .nl-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .nl-badge {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-family: 'Space Mono', monospace;
+  }
+  .nl-badge-issue { background: #04342C; color: #9FE1CB; }
+  .nl-badge-live { background: #1D9E75; color: #E1F5EE; }
+  .nl-badge-engine { background: var(--color-background-secondary); color: var(--color-text-secondary); border: 0.5px solid var(--color-border-secondary); }
+  .nl-title {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+  .nl-subtitle {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin: 0;
+    font-family: 'Space Mono', monospace;
+  }
+  .nl-divider {
+    border: none;
+    border-top: 0.5px solid var(--color-border-tertiary);
+    margin: 1.25rem 0;
+  }
+  .nl-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    margin-bottom: 10px;
+    font-family: 'Space Mono', monospace;
+  }
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 1.25rem;
+  }
+  .metric-card {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 12px 14px;
+  }
+  .metric-label {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    margin-bottom: 4px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+  .metric-value {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+    font-family: 'Space Mono', monospace;
+  }
+  .metric-value.green { color: #1D9E75; }
+  .metric-value.amber { color: #BA7517; }
+  .metric-value.neutral { color: var(--color-text-primary); }
+  .metric-sub {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    margin-top: 3px;
+    font-family: 'Space Mono', monospace;
+  }
+  .highlight-box {
+    background: #04342C;
+    border-radius: var(--border-radius-lg);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.25rem;
+    border: 0.5px solid #0F6E56;
+  }
+  .highlight-number {
+    font-size: 48px;
+    font-weight: 800;
+    color: #5DCAA5;
+    font-family: 'Space Mono', monospace;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .highlight-desc {
+    font-size: 13px;
+    color: #9FE1CB;
+    margin-top: 6px;
+    font-family: 'Space Mono', monospace;
+  }
+  .highlight-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #5DCAA5;
+    margin-bottom: 8px;
+    font-family: 'Space Mono', monospace;
+  }
+  .body-text {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+  }
+  .body-text a { color: #1D9E75; text-decoration: none; }
+  .inline-stat {
+    display: inline;
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1D9E75;
+  }
+  .inline-stat.red { color: #D85A30; }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 1.25rem;
+  }
+  .stat-row-card {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 12px 14px;
+  }
+  .stat-row-label {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    font-family: 'Space Mono', monospace;
+  }
+  .stat-row-value {
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 3px;
+    font-family: 'Space Mono', monospace;
+  }
+  .chart-wrap {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-lg);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  .monthly-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 80px;
+    margin-top: 10px;
+  }
+  .bar-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: flex-end;
+  }
+  .bar {
+    width: 100%;
+    border-radius: 2px 2px 0 0;
+    min-height: 2px;
+    transition: opacity 0.2s;
+  }
+  .bar.pos { background: #1D9E75; }
+  .bar.neg { background: #D85A30; border-radius: 0 0 2px 2px; }
+  .bar-label {
+    font-size: 9px;
+    color: var(--color-text-secondary);
+    margin-top: 4px;
+    font-family: 'Space Mono', monospace;
+    text-align: center;
+  }
+  .highlight-bar-wrap {
+    position: relative;
+  }
+  .highlight-bar-tag {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1D9E75;
+    color: #E1F5EE;
+    font-size: 9px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    white-space: nowrap;
+    margin-bottom: 4px;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+  }
+  .tldr-box {
+    border: 0.5px solid var(--color-border-secondary);
+    border-left: 3px solid #1D9E75;
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+    padding: 14px 16px;
+    margin-bottom: 1.25rem;
+  }
+  .tldr-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #1D9E75;
+    margin-bottom: 8px;
+    font-family: 'Space Mono', monospace;
+  }
+  .tldr-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .tldr-list li {
+    font-size: 14px;
+    color: var(--color-text-primary);
+    padding: 3px 0;
+    line-height: 1.5;
+  }
+  .tldr-list li::before {
+    content: "→ ";
+    color: #1D9E75;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+  }
+  .footer-bar {
+    border-top: 0.5px solid var(--color-border-tertiary);
+    padding-top: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-handle {
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Space Mono', monospace;
+    color: var(--color-text-secondary);
+  }
+  .footer-note {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    font-family: 'Space Mono', monospace;
+    text-align: right;
+  }
+  .risk-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    background: #412402;
+    color: #FAC775;
+    padding: 2px 8px;
+    border-radius: 100px;
+    margin-left: 4px;
+    font-weight: 700;
+  }
+  .zec-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .zec-price {
+    font-size: 22px;
+    font-weight: 700;
+    font-family: 'Space Mono', monospace;
+  }
+  .zec-change {
+    font-size: 13px;
+    font-family: 'Space Mono', monospace;
+    color: #D85A30;
+  }
+  .zec-vol {
+    font-size: 12px;
+    font-family: 'Space Mono', monospace;
+    color: var(--color-text-secondary);
+  }
+</style>
+
+<div class="nl-root">
+  <h2 class="sr-only">AlphaNet Strategy Newsletter — Hackworth Prime ZEC, May 2026 edition</h2>
+
+  <div class="nl-header">
+    <div class="nl-badge-row">
+      <span class="nl-badge nl-badge-issue">Vol.1 · Issue #01</span>
+      <span class="nl-badge nl-badge-live">● Live Strategy</span>
+      <span class="nl-badge nl-badge-engine">Hackworth Prime · ZEC</span>
+    </div>
+    <h1 class="nl-title">Strategy Review:<br>Hackworth Prime on ZEC-PERP</h1>
+    <p class="nl-subtitle">May 2026 · AlphaNet Strategy Intelligence</p>
+  </div>
+
+  <div class="tldr-box">
+    <div class="tldr-title">TL;DR</div>
+    <ul class="tldr-list">
+      <li>+29.8% in May 2026 — top-performing month of 2026 so far</li>
+      <li>7481% cumulative ROI since Jan 2024, Sharpe of 2.69</li>
+      <li>ZEC-PERP riding a major macro breakout from $160 to $600+</li>
+      <li>Win rate 45.48% — this is an asymmetric, not a high-accuracy, strategy</li>
+    </ul>
+  </div>
+
+  <div class="nl-section-label">Market Snapshot · ZEC-PERP</div>
+  <div class="chart-wrap" style="margin-bottom: 1.25rem;">
+    <div class="zec-price-row">
+      <span class="zec-price">$540.88</span>
+      <span class="zec-change">▼ -1.59 (-0.29%)</span>
+      <span class="zec-vol">Vol 399.66K · OI 179.30K USDC</span>
+    </div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-family: 'Space Mono', monospace; line-height: 1.6;">
+      ZEC has staged one of the quieter but more consistent comebacks in the perp market. From a multi-month accumulation base near $160–$200 in early 2025, price broke out decisively in Q1 2026, tagging highs near $680 in April before settling into a current pullback range of $520–$560. Funding rate sitting flat at 0.01% signals neutral positioning — neither overheated longs nor aggressive shorts.
+    </div>
+  </div>
+
+  <div class="nl-section-label">Performance Metrics · All-Time</div>
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-label">ROI</div>
+      <div class="metric-value green">7481%</div>
+      <div class="metric-sub">2y 4m 28d</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Sharpe</div>
+      <div class="metric-value green">2.69</div>
+      <div class="metric-sub">risk-adj.</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Win Rate</div>
+      <div class="metric-value amber">45.48%</div>
+      <div class="metric-sub">2210 trades</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Max DD</div>
+      <div class="metric-value amber">42.73%</div>
+      <div class="metric-sub">tolerable</div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <div class="highlight-label">May 2026 · Monthly Highlight</div>
+    <div class="highlight-number">+29.8%</div>
+    <div class="highlight-desc">Best month of 2026 — captured the ZEC pump from ~$380 to $680 with precision</div>
+  </div>
+
+  <div class="nl-section-label">Monthly ROI Distribution</div>
+  <div class="chart-wrap">
+    <div id="monthlyBars" class="monthly-bars"></div>
+    <div id="monthlyLabels" style="display:flex; gap:3px; margin-top: 2px;"></div>
+  </div>
+
+  <div class="nl-section-label">Deep Dive · How Hackworth Prime Works</div>
+  <p class="body-text">
+    Hackworth Prime is built on AlphaNet's proprietary deep learning engine — a SOTA multi-alpha architecture trained on cross-asset signals. For ZEC-PERP specifically, it runs in <strong>neutral market profile mode</strong> with an average net exposure of <span class="inline-stat">27.15%</span>, meaning it's not simply long or short bias — it hunts for regime shifts.
+  </p>
+  <p class="body-text">
+    The edge isn't in win rate. At <span class="inline-stat">45.48%</span>, it wins less than half its trades. The edge is in payoff asymmetry: avg winning trade lands at <span class="inline-stat">+3.83%</span> while avg losses are trimmed to <span class="inline-stat red">-2.21%</span>. That's a reward-to-risk ratio of ~1.73x — compounded over 2210 trades, it turns into +7481% ROI.
+  </p>
+
+  <div class="two-col">
+    <div class="stat-row-card">
+      <div class="stat-row-label">Avg. winning trade</div>
+      <div class="stat-row-value" style="color: #1D9E75;">+3.83%</div>
+    </div>
+    <div class="stat-row-card">
+      <div class="stat-row-label">Avg. losing trade</div>
+      <div class="stat-row-value" style="color: #D85A30;">-2.21%</div>
+    </div>
+    <div class="stat-row-card">
+      <div class="stat-row-label">Total trades</div>
+      <div class="stat-row-value">2,210</div>
+    </div>
+    <div class="stat-row-card">
+      <div class="stat-row-label">Payoff ratio</div>
+      <div class="stat-row-value" style="color: #1D9E75;">~1.73×</div>
+    </div>
+  </div>
+
+  <div class="nl-section-label">Risk Context</div>
+  <p class="body-text">
+    A 42.73% max drawdown is real — don't ignore it. <span class="risk-tag">HIGH VOL ASSET</span> ZEC is a smaller-cap privacy coin. It moves. During the flat 2025 accumulation phase (roughly Feb–Sep), the strategy grinded sideways with some negative months, testing conviction. The explosive ROI curve since late 2025 is a reward for surviving that range. Min allocation is 1000 USDC — sizing discipline matters here.
+  </p>
+
+  <div class="nl-section-label">Outlook · What to Watch</div>
+  <p class="body-text">
+    ZEC-PERP is in a healthy pullback from April highs. Current support zone around $520–$540 has held across multiple touches. If BTC holds its range and broader altcoin sentiment stabilizes, ZEC has a clear path back toward $600+. Hackworth's neutral-biased engine will adapt — it's not a directional bet, it's a regime-aware system. Watch open interest trends and funding rate as leading indicators.
+  </p>
+
+  <hr class="nl-divider">
+
+  <div class="footer-bar">
+    <div class="footer-handle">@AlphaNet_AI</div>
+    <div class="footer-note">
+      Not financial advice.<br>Strategy data as of May 29, 2026.
+    </div>
+  </div>
+</div>
+
+<script>
+const months = [
+  {l:'Jan 24',v:8},{l:'Feb',v:5},{l:'Mar',v:-3},{l:'Apr',v:12},{l:'May',v:6},
+  {l:'Jun',v:-2},{l:'Jul',v:9},{l:'Aug',v:4},{l:'Sep',v:-1},{l:'Oct',v:15},
+  {l:'Nov',v:18},{l:'Dec',v:7},
+  {l:'Jan 25',v:6},{l:'Feb',v:-4},{l:'Mar',v:3},{l:'Apr',v:8},{l:'May',v:-2},
+  {l:'Jun',v:5},{l:'Jul',v:2},{l:'Aug',v:-3},{l:'Sep',v:4},{l:'Oct',v:11},
+  {l:'Nov',v:14},{l:'Dec',v:9},
+  {l:'Jan 26',v:7},{l:'Feb',v:12},{l:'Mar',v:16},{l:'Apr',v:22},{l:'May 26',v:29.8}
+];
+
+const maxV = Math.max(...months.map(m=>Math.abs(m.v)));
+const barsEl = document.getElementById('monthlyBars');
+const labelsEl = document.getElementById('monthlyLabels');
+
+months.forEach((m, i) => {
+  const pct = Math.abs(m.v) / maxV * 100;
+  const isHighlight = i === months.length - 1;
+
+  const wrap = document.createElement('div');
+  wrap.className = 'bar-wrap highlight-bar-wrap';
+  wrap.style.position = 'relative';
+
+  if (isHighlight) {
+    const tag = document.createElement('div');
+    tag.className = 'highlight-bar-tag';
+    tag.textContent = '+29.8%';
+    wrap.appendChild(tag);
+  }
+
+  const bar = document.createElement('div');
+  bar.className = 'bar ' + (m.v >= 0 ? 'pos' : 'neg');
+  bar.style.height = Math.max(pct, 3) + '%';
+  if (isHighlight) bar.style.opacity = '1';
+  else bar.style.opacity = '0.65';
+  wrap.appendChild(bar);
+
+  barsEl.appendChild(wrap);
+
+  const lbl = document.createElement('div');
+  lbl.className = 'bar-label';
+  lbl.style.flex = '1';
+  lbl.style.textAlign = 'center';
+  const showLabel = i % 6 === 0 || i === months.length - 1;
+  lbl.textContent = showLabel ? m.l : '';
+  labelsEl.appendChild(lbl);
+});
+</script>

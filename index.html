@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlphaNet Strategy Review | May 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #000000;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --success: #a3e635;
+            --danger: #f87171;
+            --border: #262626;
+            --card-bg: #141414;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 0.625rem 2rem;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--success);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 60px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 2rem 2rem 1.5rem;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.375rem 0.875rem;
+            background: transparent;
+            border: none;
+            border-radius: 100px;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: var(--success);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.375rem;
+        }
+
+        .hero-meta {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+
+        /* Content Container */
+        .content-container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem;
+        }
+
+        /* TL;DR Section */
+        .tldr-section {
+            margin-bottom: 2rem;
+        }
+
+        .tldr-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .tldr-intro {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Strategy Cards Grid - Single Column Layout */
+        .strategy-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .strategy-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .strategy-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .strategy-title {
+            font-size: 0.9375rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .strategy-badge {
+            font-size: 0.625rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .strategy-badge.popular {
+            background: rgba(163, 230, 53, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(163, 230, 53, 0.3);
+        }
+
+        .strategy-badge.open {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.625rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-value {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stat-value.positive {
+            color: var(--success);
+        }
+
+        .stat-value.negative {
+            color: var(--danger);
+        }
+
+        /* Strategy Specs */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .specs-grid-full {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.375rem 1rem;
+            margin-bottom: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .spec-item {
+            font-size: 0.6875rem;
+            line-height: 1.5;
+        }
+
+        .spec-label {
+            color: var(--text-muted);
+        }
+
+        .spec-value {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Why Section */
+        .why-section {
+            margin-top: auto;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .why-title {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: var(--success);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .why-points {
+            display: flex;
+            flex-direction: column;
+            gap: 0.375rem;
+        }
+
+        .why-point {
+            font-size: 0.6875rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .why-point strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Strategy Specs Row - Inline Layout */
+        .strategy-specs-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 0.75rem;
+            padding: 0.5rem 0;
+        }
+
+        .spec-item-inline {
+            font-size: 0.6875rem;
+            line-height: 1.4;
+        }
+
+        .spec-label-inline {
+            color: var(--text-muted);
+        }
+
+        .spec-value-inline {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Comparison Table */
+        .comparison-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 3px;
+            height: 20px;
+            background: var(--success);
+            border-radius: 2px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table th {
+            font-size: 0.625rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-table td {
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .comparison-table .highlight {
+            background: rgba(163, 230, 53, 0.05);
+        }
+
+        /* Key Insight */
+        .insight-section {
+            margin-bottom: 2rem;
+        }
+
+        .insight-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .insight-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .insight-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .insight-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .insight-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--success);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.625rem;
+            font-weight: 700;
+            color: #000000;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.75rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .cta-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.625rem;
+        }
+
+        .cta-text {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1.5rem;
+            background: var(--success);
+            color: #000000;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(163, 230, 53, 0.3);
+        }
+
+        /* Poll Section */
+        .poll-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .poll-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .poll-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .poll-option {
+            padding: 0.5rem 1.25rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            color: var(--text-secondary);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .poll-option:hover {
+            border-color: var(--success);
+            color: var(--text-primary);
+            background: rgba(163, 230, 53, 0.1);
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 1.25rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-tagline {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .footer-team {
+            font-size: 0.8125rem;
+            color: var(--success);
+            margin-bottom: 0.625rem;
+        }
+
+        .footer-disclaimer {
+            font-size: 0.6875rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .comparison-table {
+                font-size: 0.75rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.5rem 0.75rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">α</div>
+                <span>AlphaNet</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#">Trade</a></li>
+                <li><a href="#">Portfolio</a></li>
+                <li><a href="#">Markets</a></li>
+                <li><a href="#">Strategies</a></li>
+                <li><a href="#">User Guide</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="badge">Strategy Intelligence</div>
+            <h1>AlphaNet Strategy Review | May 2026</h1>
+            <p class="hero-subtitle">Multi-Strategy Performance Report featuring Hackworth Series</p>
+            <p class="hero-meta">Transparency is core to AlphaNet. Here's our latest multi-strategy review featuring four strong Hackworth Series performers with detailed live data.</p>
+        </section>
+
+        <div class="content-container">
+            <!-- TL;DR Section -->
+            <section class="tldr-section">
+                <div class="tldr-card">
+                    <p class="tldr-intro">Four Hackworth Series strategies delivered strong results in May 2026. All strategies demonstrate excellent risk-adjusted returns with Sharpe ratios above 2.3.</p>
+                </div>
+            </section>
+
+            <!-- Comparison Table -->
+            <section class="comparison-section">
+                <h2 class="section-title">Performance Comparison</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Strategy</th>
+                            <th>May Performance</th>
+                            <th>Win Rate</th>
+                            <th>Sharpe Ratio</th>
+                            <th>Total Trades</th>
+                            <th>Avg Win</th>
+                            <th>Avg Loss</th>
+                            <th>Net Exposure</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight">
+                            <td><strong>Hackworth Prime – ZEC</strong></td>
+                            <td><span style="color: var(--success); font-weight: 600;">+20.3%</span></td>
+                            <td>45.48%</td>
+                            <td><span style="color: var(--success);">2.69</span></td>
+                            <td>2,210</td>
+                            <td><span style="color: var(--success);">+3.83%</span></td>
+                            <td><span style="color: var(--danger);">-2.21%</span></td>
+                            <td>27.15%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hackworth Trend – BNB</strong></td>
+                            <td><span style="color: var(--success); font-weight: 600;">+8.4%</span></td>
+                            <td>51.73%</td>
+                            <td><span style="color: var(--success);">2.36</span></td>
+                            <td>1,536</td>
+                            <td><span style="color: var(--success);">+2.67%</span></td>
+                            <td><span style="color: var(--danger);">-2.22%</span></td>
+                            <td>32.58%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hackworth OptimaShort – LINK</strong></td>
+                            <td><span style="color: var(--success); font-weight: 600;">+2.0%</span></td>
+                            <td>51.08%</td>
+                            <td><span style="color: var(--success);">2.60</span></td>
+                            <td>4,278</td>
+                            <td><span style="color: var(--success);">+2.90%</span></td>
+                            <td><span style="color: var(--danger);">-2.79%</span></td>
+                            <td>18.34%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hackworth OptimaShort – ADA</strong></td>
+                            <td><span style="color: var(--success); font-weight: 600;">+2.2%</span></td>
+                            <td>51.08%</td>
+                            <td><span style="color: var(--success);">2.43</span></td>
+                            <td>1,891</td>
+                            <td><span style="color: var(--success);">+3.26%</span></td>
+                            <td><span style="color: var(--danger);">-3.79%</span></td>
+                            <td>18.34%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Strategy Details and Analysis -->
+            <section class="comparison-section">
+                <h2 class="section-title">Strategy Details and Analysis</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Strategy</th>
+                            <th>Market Profile</th>
+                            <th>Net Exposure</th>
+                            <th>Tech Type</th>
+                            <th>Strategy Type</th>
+                            <th>Min Allocation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight">
+                            <td><strong>Hackworth Prime – ZEC</strong></td>
+                            <td>Neutral</td>
+                            <td>27.15%</td>
+                            <td>Quantitative AI (Deep Learning)</td>
+                            <td>Multi-Alpha</td>
+                            <td>≥ 1,000 USDC</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hackworth Trend – BNB</strong></td>
+                            <td>Long bias, fat-tail heavy</td>
+                            <td>32.58%</td>
+                            <td>Quantitative AI (Deep Learning)</td>
+                            <td>Multi-Alpha</td>
+                            <td>≥ 1,000 USDC</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hackworth OptimaShort – LINK</strong></td>
+                            <td>Neutral with short-bias</td>
+                            <td>18.34%</td>
+                            <td>Quantitative AI (Deep Learning)</td>
+                            <td>Multi-Alpha</td>
+                            <td>≥ 1,000 USDC</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hackworth OptimaShort – ADA</strong></td>
+                            <td>Neutral with short-bias</td>
+                            <td>18.34%</td>
+                            <td>Quantitative AI (Deep Learning)</td>
+                            <td>Multi-Alpha</td>
+                            <td>≥ 1,000 USDC</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Strategy Cards Grid -->
+            <div class="strategy-grid">
+                <!-- Strategy 1: ZEC -->
+                <div class="strategy-card">
+                    <div class="strategy-header">
+                        <div class="strategy-title">1. Hackworth Prime – ZEC</div>
+                        <span class="strategy-badge popular">Popular</span>
+                    </div>
+                    <div class="why-section">
+                        <div class="why-title">Why ZEC Delivered in May</div>
+                        <div class="why-points">
+                            <div class="why-point"><strong>• Perfect Market Regime Alignment</strong> — May 2026 delivered a high-volatility narrative breakout for ZEC — SEC investigation formally closed, Grayscale spot ZEC ETF momentum, record shielded adoption, and strong decoupling from BTC — creating the exact fat-tail environment Hackworth Prime is engineered to harvest.</div>
+                            <div class="why-point"><strong>• Multi-Alpha Signal Convergence</strong> — Hackworth Prime's SOTA multi-alpha engine (20+ low-correlation sources) achieved rare synchronized conviction. Multiple models fired bullish simultaneously, amplified by real-time retraining on fresh catalysts.</div>
+                            <div class="why-point"><strong>• Disciplined Adaptive Execution</strong> — Low net exposure (~27%), dynamic sizing, and institutional-grade AI execution (minimal slippage + 24/7 autopilot) turned theoretical edge into a clean +20.3% monthly ROI.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strategy 2: BNB -->
+                <div class="strategy-card">
+                    <div class="strategy-header">
+                        <div class="strategy-title">2. Hackworth Trend – BNB</div>
+                        <span class="strategy-badge open">Open</span>
+                    </div>
+                    <div class="why-section">
+                        <div class="why-title">Why BNB Performed Well in May</div>
+                        <div class="why-points">
+                            <div class="why-point"><strong>• Perfect Market Regime Alignment</strong> — May 2026 was a textbook trending environment for BNB. The launch of VanEck's first U.S. spot BNB ETF (VBNB) on May 28 triggered strong institutional inflows and a short squeeze, pushing BNB price up ~12% in late May (breaking $700–$730 levels). This was amplified by the quarterly token burn (~1.57M BNB removed, worth ~$1B), Binance Chain growth milestones, and DeFi/GameFi activity surge — exactly the sustained directional upside + fat-tail moves the Hackworth Trend variant is optimized for.</div>
+                            <div class="why-point"><strong>• Multi-Alpha Signal Convergence</strong> — The deep learning engine successfully converged multiple high-conviction signals: trend-following momentum (capturing the post-ETF breakout), on-chain utility metrics (rising TVL and transaction volume on BNB Chain), exchange activity/order-flow from Binance, and positive sentiment around the ETF + token burn. In the moderate-to-high volatility regime, these alphas aligned cleanly, resulting in 1,536 total trades with a solid 51.73% win rate and average winning trades of +2.67%.</div>
+                            <div class="why-point"><strong>• Disciplined Adaptive Execution</strong> — With a moderate average net exposure of 32.58% (long bias), dynamic position sizing scaled aggressively into confirmed trends while the fat-tail heavy design harvested the late-May impulse. Combined with institutional-grade AI execution (minimal slippage on PERP_BNB_USDC) and tight risk overlays, the strategy limited max drawdown to 32.71% and delivered a clean +8.4% monthly return with a respectable Sharpe of 2.36 — excellent risk-adjusted performance in a trending ecosystem token.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strategy 3: LINK -->
+                <div class="strategy-card">
+                    <div class="strategy-header">
+                        <div class="strategy-title">3. Hackworth OptimaShort – LINK</div>
+                        <span class="strategy-badge open">Open</span>
+                    </div>
+                    <div class="why-section">
+                        <div class="why-title">Why LINK Showed Resilience in May</div>
+                        <div class="why-points">
+                            <div class="why-point"><strong>• Perfect Market Regime Alignment</strong> — May 2026 was a classic consolidating, range-bound environment for LINK, trading mostly between $8.50 – $10.60 with several failed breakout attempts around $10.8–$11.2. Key catalysts included DTCC integration of Chainlink's Runtime Environment for collateral management, Bitwise Chainlink ETF (CLNK) flows, and AWS Marketplace adding Chainlink data services. This low-volatility, mean-reverting regime with occasional funding rate inefficiencies was ideal for the OptimaShort variant's enhanced short-bias architecture.</div>
+                            <div class="why-point"><strong>• Multi-Alpha Signal Convergence</strong> — The deep learning engine effectively converged multiple short-side and neutral alphas: momentum reversal signals (catching failed breakouts), oracle demand & on-chain activity metrics (rising CCIP usage and Proof of Reserve), volatility contraction detection, and perpetual funding rate arbitrage opportunities. With 4,278 total trades executed, the model demonstrated high responsiveness, allowing real-time retraining to adapt quickly to the slow, infrastructure-driven narrative of Chainlink in a sideways market.</div>
+                            <div class="why-point"><strong>• Disciplined Adaptive Execution</strong> — Maintaining a low average net exposure of 18.34% with built-in short-bias, the strategy dynamically scaled into high-probability mean-reversion setups while the tight risk overlays (Volatility Switch + Directional Risk models) kept the maximum drawdown to just 22.42% — the strongest risk control among the reviewed strategies. Combined with institutional-grade AI execution (minimal slippage on PERP_LINK_USDC) and 24/7 autopilot, it delivered a steady +2.0% monthly return with an excellent Sharpe Ratio of 2.60, proving its value as a reliable performer in choppy, non-trending conditions.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strategy 4: ADA -->
+                <div class="strategy-card">
+                    <div class="strategy-header">
+                        <div class="strategy-title">4. Hackworth OptimaShort – ADA</div>
+                        <span class="strategy-badge open">Open</span>
+                    </div>
+                    <div class="why-section">
+                        <div class="why-title">Why ADA Delivered in a Choppy Market</div>
+                        <div class="why-points">
+                            <div class="why-point"><strong>• Perfect Market Regime Alignment</strong> — May 2026 was a textbook choppy, range-bound environment for ADA, with price oscillating mainly between $0.23 – $0.28 amid anticipation of the Van Rossem Hard Fork (Protocol 11, governance vote around May 29). Key developments included Node 11.0 deployment on preview testnet, ongoing Grayscale ADA ETF discussions, and steady (but not explosive) on-chain governance activity. This low-volatility, mean-reverting regime with frequent failed breakouts and funding rate fluctuations was ideal for the OptimaShort variant's enhanced short-bias design, allowing it to profit from both upside retraces and downside extensions without needing strong directional momentum.</div>
+                            <div class="why-point"><strong>• Multi-Alpha Signal Convergence</strong> — The deep learning engine successfully converged multiple short-side and neutral alphas: momentum reversal signals (catching repeated failed rallies around $0.27 resistance), on-chain governance & developer activity metrics (hard fork preparations and treasury proposals), perpetual funding rate dynamics (exploiting inefficiencies during consolidation), and volatility contraction patterns. With 1,891 total trades executed, the model's real-time online retraining enabled quick adaptation to Cardano's deliberate, governance-heavy narrative pace in a sideways market — resulting in a balanced 51.08% win rate.</div>
+                            <div class="why-point"><strong>• Disciplined Adaptive Execution</strong> — Maintaining a low average net exposure of 18.34% with built-in short-bias, the strategy dynamically scaled into high-probability mean-reversion setups while tight risk overlays (Volatility Switch + Directional Risk models) prevented outsized losses during brief spikes. Combined with institutional-grade AI execution (minimal slippage on PERP_ADA_USDC) and 24/7 autopilot, it achieved excellent risk control relative to the choppy conditions, delivering a steady +2.2% monthly return with a solid Sharpe Ratio of 2.43 — demonstrating strong resilience where pure long-biased strategies typically struggled.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Why Series Delivers -->
+            <section class="insight-section">
+                <div class="insight-card">
+                    <div class="insight-title">Why the Hackworth Series Stands Out</div>
+                    <ul class="insight-list">
+                        <li class="insight-item">
+                            <span class="insight-icon">1</span>
+                            <span>Multi-alpha deep learning with continuous retraining</span>
+                        </li>
+                        <li class="insight-item">
+                            <span class="insight-icon">2</span>
+                            <span>Tailored variants (Prime, Trend, OptimaShort) for different market regimes</span>
+                        </li>
+                        <li class="insight-item">
+                            <span class="insight-icon">3</span>
+                            <span>Balanced risk profiles + institutional-grade 24/7 execution</span>
+                        </li>
+                        <li class="insight-item">
+                            <span class="insight-icon">4</span>
+                            <span>Consistent alpha across explosive moves and choppy markets</span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <h3 class="cta-title">Ready to Deploy?</h3>
+                <p class="cta-text">All strategies are live on AlphaNet. Search by name and deploy with USDC (min. 1,000). We'll keep this transparent series going.</p>
+                <a href="https://trade.alphanet.global/strategies/" class="cta-button" target="_blank">
+                    View All Strategies →
+                </a>
+            </section>
+
+            <!-- Poll Section -->
+            <section class="poll-section">
+                <h3 class="poll-title">Which strategy or pair should we review next?</h3>
+                <div class="poll-options">
+                    <button class="poll-option">XMR</button>
+                    <button class="poll-option">SOL</button>
+                    <button class="poll-option">AVAX</button>
+                    <button class="poll-option">ETH/BTC Pair</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-tagline">Happy alpha generating!</p>
+            <p class="footer-team">@AlphaNet_AI Team</p>
+            <p class="footer-disclaimer">
+                Data from live platform screenshots. Past performance is not indicative of future results. Always trade responsibly with proper risk management.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
